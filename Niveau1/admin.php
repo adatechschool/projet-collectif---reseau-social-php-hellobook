@@ -22,23 +22,11 @@
                     <li><a href="followers.php?user_id=5">Mes suiveurs</a></li>
                     <li><a href="subscriptions.php?user_id=5">Mes abonnements</a></li>
                 </ul>
+<?php $title = '✍'?>
+<?php include('header.html')?>
 
-            </nav>
-        </header>
+<?php include('logbdd.php')?>
 
-        <?php
-        /**
-         * Etape 1: Ouvrir une connexion avec la base de donnée.
-         */
-        // on va en avoir besoin pour la suite
-        $mysqli = new mysqli("localhost", "root", "root", "socialnetwork");
-        //verification
-        if ($mysqli->connect_errno)
-        {
-            echo("Échec de la connexion : " . $mysqli->connect_error);
-            exit();
-        }
-        ?>
         <div id="wrapper" class='admin'>
             <aside>
                 <h2>Mots-clés</h2>
@@ -101,10 +89,10 @@
                         <p>id:123</p>
                         <nav>
                             <a href="wall.php?user_id=123">Mur</a>
-                            | <a href="feed.php?user_id=123">Flux</a>
-                            | <a href="settings.php?user_id=123">Paramètres</a>
-                            | <a href="followers.php?user_id=123">Suiveurs</a>
-                            | <a href="subscriptions.php?user_id=123">Abonnements</a>
+                            <a href="feed.php?user_id=123">Flux</a>
+                            <a href="settings.php?user_id=123">Paramètres</a>
+                            <a href="followers.php?user_id=123">Suiveurs</a>
+                            <a href="subscriptions.php?user_id=123">Abonnements</a>
                         </nav>
                     </article>
                 <?php } ?>
