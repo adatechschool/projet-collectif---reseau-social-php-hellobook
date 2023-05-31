@@ -2,6 +2,8 @@
 <?php $title = '🍪'?>
 <?php include('header.html')?>
 
+<?php include('logbdd.php') ?>
+
         <div id="wrapper">
             <?php
             /**
