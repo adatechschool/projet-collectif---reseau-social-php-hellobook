@@ -1,5 +1,6 @@
 <?php $title = '📬'?>
-<?php include('header.html')?>
+<?php include('header.php') ?>
+
         <div id="wrapper">
             <aside>
                 <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
@@ -42,7 +43,9 @@
                  */
 
                 // Etape 1: Ouvrir une connexion avec la base de donnée.
+
                 include('logbdd.php');
+
                 //verification
                 if ($mysqli->connect_errno)
                 {

@@ -1,5 +1,5 @@
 <?php $title = '🔧'?>
-<?php include('header.html')?>
+<?php include('header.php') ?>
         <div id="wrapper" class='profile'>
 
 

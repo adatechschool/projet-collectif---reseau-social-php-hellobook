@@ -10,4 +10,3 @@
             echo("Échec de la connexion : " . $mysqli->connect_error);
             exit();
         }
-?>

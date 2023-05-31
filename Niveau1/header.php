@@ -2,7 +2,7 @@
 <html lang="fr">
     <head>
         <meta charset="utf-8">
-        <title><?php echo $title; ?></title> 
+        <title> <?php echo $title; ?> </title>
         <meta name="author" content="Hanaa Coraline Elodie">
         <link rel="stylesheet" href="style.css"/>
     </head>
@@ -22,6 +22,5 @@
                     <li><a href="followers.php?user_id=5">Mes suiveurs</a></li>
                     <li><a href="subscriptions.php?user_id=5">Mes abonnements</a></li>
                 </ul>
-
             </nav>
         </header>

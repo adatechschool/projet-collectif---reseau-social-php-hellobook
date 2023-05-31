@@ -1,5 +1,5 @@
 <?php $title = '😸'?>
-<?php include('header.html')?>
+<?php include('header.php') ?>
         <div id="wrapper">
             <aside>
                 <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
