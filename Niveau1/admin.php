@@ -11,6 +11,7 @@
                  * Etape 2 : trouver tous les mots clés
                  */
                 $laQuestionEnSql = "SELECT * FROM `tags` LIMIT 50";
+                // requete et controle avant récupération
                 $lesInformations = $mysqli->query($laQuestionEnSql);
                 // Vérification
                 if ( ! $lesInformations)
@@ -23,6 +24,7 @@
                  * Etape 3 : @todo : Afficher les mots clés en s'inspirant de ce qui a été fait dans news.php
                  * Attention à en pas oublier de modifier tag_id=321 avec l'id du mot dans le lien
                  */
+                // Récupération des données 
                 while ($tag = $lesInformations->fetch_assoc())
                 {
                     echo "<pre>" . print_r($tag, 1) . "</pre>";
@@ -56,8 +58,12 @@
                  * Etape 5 : @todo : Afficher les utilisatrices en s'inspirant de ce qui a été fait dans news.php
                  * Attention à en pas oublier de modifier dans le lien les "user_id=123" avec l'id de l'utilisatrice
                  */
+                // fetch_assoc donne un tableau de type clé valeur
+                // La condition dans while , on affecte les informations dispos à tag . Tant qu'il y a des informations (vraie), on continue . 
                 while ($tag = $lesInformations->fetch_assoc())
                 {
+                    //  <pre> : élément de texte préformaté / respecte le format initial
+                    //  print_r : affiche les données d'une variable et la formate
                     echo "<pre>" . print_r($tag, 1) . "</pre>";
                     ?>
                     <article>
@@ -76,3 +82,12 @@
         </div>
     </body>
 </html>
+
+
+
+[red, chaise, pomme]
+{
+    color:red,
+    furniture: chaise,
+    fruit: pomme
+}

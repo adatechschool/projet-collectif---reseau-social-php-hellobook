@@ -107,17 +107,13 @@
                             <p><?php echo $post["content"] ?></p>
                         </div>
                         <footer>
-                            <small>♥ <?php echo $post["like_number"] ?> </small>
+                            <small>♥<?php echo $post['like_number'] ?></small>
                             <?php 
-                            $values = explode(",", $post["taglist"]);
-                                foreach ($values as &$value) {
-                                   if ($values[count($values)-1]){
-                                    ?> <a href=""> <?php echo " #" . $value ;?> </a>
-                                    <?php }
-                                    else { ?> <a href=""> <?php echo "#" . $value .", ";}
-                               
-                                };
-                                ?></a>
+                            $tagArray = explode(",",$post['taglist']);
+                                foreach ($tagArray as $tagElement){
+                                    ?><a href=""><?php echo "#" . $tagElement . ", ";
+                                }?>
+                             </a>
                         </footer>
                     </article>
                     <?php
