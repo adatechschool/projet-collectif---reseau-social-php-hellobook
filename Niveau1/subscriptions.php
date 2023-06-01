@@ -19,7 +19,7 @@
                 
                     <p>Sur cette page vous trouverez la liste des personnes dont
                         l'utilisatrice <?php echo $user['alias'] ?>
-                        suit les messages
+                        suit les messages.
                     </p>
 
                 </section>
@@ -39,16 +39,21 @@
                     GROUP BY users.id
                     ";
                 $lesInformations = $mysqli->query($laQuestionEnSql);
+                
                 // Etape 4: à vous de jouer
                 //@todo: faire la boucle while de parcours des abonnés et mettre les bonnes valeurs ci dessous 
                 
-                
+                while ($follow = $lesInformations->fetch_assoc()){
+                    echo "<pre>" . print_r($follow, 1) . "</pre>";
                 ?>
                 <article>
                     <img src="user.jpg" alt="blason"/>
-                    <h3>Alexandra</h3>
-                    <p>id:654</p>                    
+                    <h3><?php echo $follow['alias']?></h3>
+                    <p>id:<?php echo $follow["id"]?></p>                    
                 </article>
+                <?php
+            }
+            ?>
             </main>
         </div>
     </body>
