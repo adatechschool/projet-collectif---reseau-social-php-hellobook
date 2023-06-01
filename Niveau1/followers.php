@@ -1,15 +1,22 @@
 <?php $title = '👫'?>
 <?php include('header.php') ?>
+<?php include('logbdd.php')?>
+
 
         <div id="wrapper">          
             <aside>
                 <img src = "user.jpg" alt = "Portrait de l'utilisatrice"/>
+                <?php $userId = intval($_GET['user_id']) ?>
+                <?php $laQuestion = "SELECT * FROM `users` WHERE id= '$userId' ";
+                // requete et controle avant récupération
+                $lesInfos = $mysqli->query($laQuestion);
+    
+                  $user = $lesInfos->fetch_assoc();
+                  ?>
                 <section>
                     <h3>Présentation</h3>
                     <p>Sur cette page vous trouverez la liste des personnes qui
-                        suivent les messages de l'utilisatrice
-                        n° <?php echo intval($_GET['user_id']) ?></p>
-
+                        suivent les messages de l'utilisatrice <?php echo $user['alias'] ?>.</p>
                 </section>
             </aside>
             <main class='contacts'>
@@ -29,12 +36,17 @@
                 $lesInformations = $mysqli->query($laQuestionEnSql);
                 // Etape 4: à vous de jouer
                 //@todo: faire la boucle while de parcours des abonnés et mettre les bonnes valeurs ci dessous 
+                while ($follow = $lesInformations->fetch_assoc()){
+                    echo "<pre>" . print_r($follow, 1) . "</pre>";
                 ?>
                 <article>
                     <img src="user.jpg" alt="blason"/>
-                    <h3>Béatrice</h3>
-                    <p>id:321</p>
+                    <h3><?php echo $user['alias'] ?></h3>
+                    <p>id:<?php echo $follow["id"]?></p>
                 </article>
+                <?php
+            }
+            ?>
             </main>
         </div>
     </body>
