@@ -1,13 +1,24 @@
 <?php $title = '😸'?>
 <?php include('header.php') ?>
+<?php include('logbdd.php')?>
+
         <div id="wrapper">
+    
             <aside>
-                <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
+            <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
+            <?php $userId = intval($_GET['user_id']) ?>
+                <?php $laQuestion = "SELECT * FROM `users` WHERE id= '$userId' ";
+                // requete et controle avant récupération
+                $lesInfos = $mysqli->query($laQuestion);
+    
+                  $user = $lesInfos->fetch_assoc();
+                  ?>
+
                 <section>
                     <h3>Présentation</h3>
+                
                     <p>Sur cette page vous trouverez la liste des personnes dont
-                        l'utilisatrice
-                        n° <?php echo intval($_GET['user_id']) ?>
+                        l'utilisatrice <?php echo $user['alias'] ?>
                         suit les messages
                     </p>
 
@@ -30,6 +41,8 @@
                 $lesInformations = $mysqli->query($laQuestionEnSql);
                 // Etape 4: à vous de jouer
                 //@todo: faire la boucle while de parcours des abonnés et mettre les bonnes valeurs ci dessous 
+                
+                
                 ?>
                 <article>
                     <img src="user.jpg" alt="blason"/>
