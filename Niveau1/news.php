@@ -102,7 +102,7 @@
                         <h3>
                             <time><?php echo $post['created'] ?></time>
                         </h3>
-                        <address>AREMPLACER</address>
+                        <address><?php echo $tags['label']</address>
                         <div>
                             <p>AREMPLACER</p>
                         </div>
