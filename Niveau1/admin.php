@@ -30,10 +30,10 @@
                     echo "<pre>" . print_r($tag, 1) . "</pre>";
                     ?>
                     <article>
-                        <h3>#chaussette</h3>
-                        <p>id:321</p>
+                        <h3><?php echo $tag['label'] ?></h3>
+                        <p><?php echo $tag['id'];?></p>
                         <nav>
-                            <a href="tags.php?tag_id=321">Messages</a>
+                            <a href="<?php echo "tags.php?tag_id=".$tag['id'] ?>">Message</a>
                         </nav>
                     </article>
                 <?php } ?>
@@ -82,12 +82,3 @@
         </div>
     </body>
 </html>
-
-
-
-[red, chaise, pomme]
-{
-    color:red,
-    furniture: chaise,
-    fruit: pomme
-}
