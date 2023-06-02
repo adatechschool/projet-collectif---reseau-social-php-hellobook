@@ -43,10 +43,11 @@
                 //@todo: faire la boucle while de parcours des abonnés et mettre les bonnes valeurs ci dessous 
                 
                 while ($follow = $lesInformations->fetch_assoc())
+
                 {
-                    echo "<pre>" . print_r($follow, 1) . "</pre>";
+                    echo "<pre>" . print_r($post, 1) . "</pre>";
                 ?>
-                
+
                 <article>
                     <img src="user.jpg" alt="blason"/>
                     <h3><?php echo $follow['alias']?></h3>
@@ -56,7 +57,7 @@
                 <?php
             }
             ?>
-            
+
             </main>
         </div>
     </body>
