@@ -79,13 +79,9 @@
                             <p><?php echo $post['content'] ?></p>
                         </div>                                            
                         <footer>
-                            <small>♥ <?php echo $post['like_number'] ?></small>
-                            <?php 
-                            $tagArray = explode(",",$post['taglist']);
-                                foreach ($tagArray as $tagElement){
-                                    ?><a href=""><?php echo "#" . $tagElement . ", ";
-                                }?>
-                             </a>
+                            <small>♥ <?php echo $post['created'] ?></small>
+                            <a href="">#lorem</a>,
+                            <a href="">#piscitur</a>,
                         </footer>
                     </article>
                 <?php } ?>
