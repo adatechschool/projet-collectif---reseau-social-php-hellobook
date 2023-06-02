@@ -42,10 +42,8 @@
                 // Etape 4: à vous de jouer
                 //@todo: faire la boucle while de parcours des abonnés et mettre les bonnes valeurs ci dessous 
                 
-                while ($follow = $lesInformations->fetch_assoc())
-                    while ($post = $lesInformations->fetch_assoc())
+                while ($post = $lesInformations->fetch_assoc())
                 {
-echo "<pre>" . print_r($follow, 1) . "</pre>";
                     echo "<pre>" . print_r($post, 1) . "</pre>";
                 ?>
                 
@@ -54,10 +52,10 @@ echo "<pre>" . print_r($follow, 1) . "</pre>";
                     <h3><?php echo $follow['alias']?></h3>
                     <p>id:<?php echo $follow["id"]?></p>                    
                 </article>
+
                 <?php
             }
             ?>
-    
             
             </main>
         </div>
