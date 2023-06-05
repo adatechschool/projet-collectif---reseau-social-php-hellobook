@@ -25,11 +25,11 @@
                         echo "<pre>" . print_r($_POST, 1) . "</pre>";
                         // et complétez le code ci dessous en remplaçant les ???
                         $new_email = $_POST['email'];
-                        $new_alias = $_POST['alias'];
-                        $new_passwd = $_POST['password'];
+                        $new_alias = $_POST['pseudo'];
+                        $new_passwd = $_POST['motpasse'];
 
                         //Etape 3 : Ouvrir une connexion avec la base de donnée.
-                        include('logbdd.php')
+                        include('logbdd.php');
 
                         //Etape 4 : Petite sécurité
                         // pour éviter les injection sql : https://www.w3schools.com/sql/sql_injection.asp
@@ -59,7 +59,7 @@
                     }
                     ?>                     
                     <form action="registration.php" method="post">
-                        <input type='hidden'name='???' value='achanger'>
+                        <input type='hidden'name='id' value='achanger'>
                         <dl>
                             <dt><label for='pseudo'>Pseudo</label></dt>
                             <dd><input type='text'name='pseudo'></dd>

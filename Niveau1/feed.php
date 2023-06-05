@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <?php $title = '🍪'?>
 <?php include('header.php') ?>
 

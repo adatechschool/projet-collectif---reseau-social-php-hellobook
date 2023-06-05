@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <?php $title = 'Tags'?>
 <?php include('header.php') ?>
         <div id="wrapper">
