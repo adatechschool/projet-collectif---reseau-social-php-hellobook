@@ -50,7 +50,9 @@
 
                 <article>
                     <img src="user.jpg" alt="blason"/>
-                    <h3><?php echo $follow['alias']?></h3>
+                    <h3><?php 
+                    echo '<a href="wall.php?user_id='.$follow['id'] .'">' . $follow['alias'] . '</a>' ?>
+                    </h3>
                     <p>id:<?php echo $follow["id"]?></p>                    
                 </article>
 
