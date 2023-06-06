@@ -5,6 +5,14 @@ session_start();
 <?php include('header.php') ?>
 
         <div id="wrapper">
+
+        <?php
+            /**
+             * Etape 2: se connecter à la base de donnée
+             */
+            include('logbdd.php');
+            ?>
+
             <?php
             /**
              * Etape 1: Le mur concerne un utilisateur en particulier
@@ -16,13 +24,21 @@ session_start();
         
             $userId = $_SESSION['connected_id'];
             
+               /**
+                     * Récupération de la liste des tags existant
+                     */
+                    $listTags = [];
+                    $laQuestionEnSqlTag = "SELECT * FROM tags";
+                    $lesInformationsTag = $mysqli->query($laQuestionEnSqlTag);
+                    while ($tag = $lesInformationsTag->fetch_assoc())
+                    {
+                        $listTags[$tag['id']] = $tag['label'];
+            
+                    }
+
+                   
             ?>
-            <?php
-            /**
-             * Etape 2: se connecter à la base de donnée
-             */
-            include('logbdd.php');
-            ?>
+         
 
             <aside>
                 <?php
@@ -42,6 +58,84 @@ session_start();
                     <?php echo $user['alias'] ?>
                     
                     </p>
+                </section>
+
+                <section>
+                <article>
+                <?php
+                /**
+                     * TRAITEMENT DU FORMULAIRE
+                     */
+                    // Etape 1 : vérifier si on est en train d'afficher ou de traiter le formulaire
+                    // si on recoit un champs email rempli il y a une chance que ce soit un traitement
+                    $enCoursDeTraitement = isset($_POST['id']);
+                    if ($enCoursDeTraitement)
+                    {
+                        // on ne fait ce qui suit que si un formulaire a été soumis.
+                        // Etape 2: récupérer ce qu'il y a dans le formulaire @todo: c'est là que votre travaille se situe
+                        // observez le résultat de cette ligne de débug (vous l'effacerez ensuite)
+                        echo "<pre>" . print_r($_POST, 1) . "</pre>";
+                        // et complétez le code ci dessous en remplaçant les ???
+                        $authorId = $_POST['id'];
+                        $postContent = $_POST['message'];
+                        $tagId = $_POST['id'];
+                        $tagContent = $_POST['tag'];
+                        
+
+
+                        //Etape 3 : Petite sécurité
+                        // pour éviter les injection sql : https://www.w3schools.com/sql/sql_injection.asp
+                        $authorId = intval($mysqli->real_escape_string($authorId));
+                        $postContent = $mysqli->real_escape_string($postContent);
+                        $tagContent = $mysqli->real_escape_string($tagContent);
+
+                        //Etape 4 : construction de la requete
+                        $lInstructionSql = "INSERT INTO posts "
+                                . "(id, user_id, content, created, parent_id) "
+                                . "VALUES (NULL, " 
+                                . $userId . ", "
+                                . "'" . $postContent . "', "
+                                . "NOW(), "
+                                . "NULL);"
+                                ;
+
+                        
+                        echo $lInstructionSql;
+                        // Etape 5 : execution
+                        $ok = $mysqli->query($lInstructionSql);
+                        if ( ! $ok)
+                        {
+                            echo "Impossible d'ajouter le message: " . $mysqli->error;
+                        } else
+                        {
+                            echo "Message posté en tant que :" . $user['alias'];
+                        }
+                    }
+                    ?>                     
+                    <form action="wall.php" method="post">
+                    <input type='hidden' name='id' value="<?php echo $userId ?>">
+                        <dl>
+                        <h3>
+                        <time><?php $date=date('d/m/y h:i:s'); echo $date?> </time>
+                        </h3>
+                    <address><?php
+                                      
+                                    ?></address>
+                                    
+                            <dt><label for='message'><?php echo $user['alias']; ?>, ajoute un message :</label></dt>
+                            <br>
+                            <dd><textarea name='message' ></textarea></dd>
+                            <dt><label for='auteur'>Auteur</label></dt>
+                            <dd><select name='auteur'>
+                                    <?php
+                                    foreach ($listTags as $tag => $label)
+                                        echo "<option value='$tag'>$label</option>";
+                                    ?>
+                                </select></dd>
+                        </dl>
+                        <input type='submit'>
+                    </form>  
+                </article>     
                 </section>
             </aside>
             <main>
@@ -94,68 +188,7 @@ session_start();
                         </footer>
                     </article>
                 <?php } ?>
-             <section>
-                <article>
-                <?php
-                /**
-                     * TRAITEMENT DU FORMULAIRE
-                     */
-                    // Etape 1 : vérifier si on est en train d'afficher ou de traiter le formulaire
-                    // si on recoit un champs email rempli il y a une chance que ce soit un traitement
-                    $enCoursDeTraitement = isset($_POST['id']);
-                    if ($enCoursDeTraitement)
-                    {
-                        // on ne fait ce qui suit que si un formulaire a été soumis.
-                        // Etape 2: récupérer ce qu'il y a dans le formulaire @todo: c'est là que votre travaille se situe
-                        // observez le résultat de cette ligne de débug (vous l'effacerez ensuite)
-                        echo "<pre>" . print_r($_POST, 1) . "</pre>";
-                        // et complétez le code ci dessous en remplaçant les ???
-                        $authorId = $_POST['id'];
-                        $postContent = $_POST['message'];
-
-
-                        //Etape 3 : Petite sécurité
-                        // pour éviter les injection sql : https://www.w3schools.com/sql/sql_injection.asp
-                        $authorId = intval($mysqli->real_escape_string($authorId));
-                        $postContent = $mysqli->real_escape_string($postContent);
-                        //Etape 4 : construction de la requete
-                        $lInstructionSql = "INSERT INTO posts "
-                                . "(id, user_id, content, created, parent_id) "
-                                . "VALUES (NULL, " 
-                                . $userId . ", "
-                                . "'" . $postContent . "', "
-                                . "NOW(), "
-                                . "NULL);"
-                                ;
-                        echo $lInstructionSql;
-                        // Etape 5 : execution
-                        $ok = $mysqli->query($lInstructionSql);
-                        if ( ! $ok)
-                        {
-                            echo "Impossible d'ajouter le message: " . $mysqli->error;
-                        } else
-                        {
-                            echo "Message posté en tant que :" . $user['alias'];
-                        }
-                    }
-                    ?>                     
-                    <form action="wall.php" method="post">
-                    <input type='hidden' name='id' value="<?php echo $userId ?>">
-                        <dl>
-                        <h3>
-                        <time datetime='2020-02-01 11:12:13' >31 février 2010 à 11h12</time>
-                        </h3>
-                    <address><?php
-                                        echo $user['alias'];
-                                    ?></address>
-                                    
-                            <dt><label for='message'>Message</label></dt>
-                            <dd><textarea name='message'></textarea></dd>
-                        </dl>
-                        <input type='submit'>
-                    </form>  
-                </article>     
-                </section>
+             
             </main>
         </div>
     </body>
