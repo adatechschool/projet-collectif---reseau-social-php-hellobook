@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <?php $title = '🧱'?>
 <?php include('header.php') ?>
 
@@ -10,7 +13,9 @@
              * Documentation : https://www.php.net/manual/fr/reserved.variables.get.php
              * ... mais en résumé c'est une manière de passer des informations à la page en ajoutant des choses dans l'url
              */
-            $userId =intval($_GET['user_id']);
+        
+            $userId = $_SESSION['connected_id'];
+            
             ?>
             <?php
             /**
@@ -34,7 +39,7 @@
                 <section>
                     <h3>Présentation</h3>
                     <p>Sur cette page vous trouverez tous les message de l'utilisatrice : 
-                    <?php echo $user['alias']?>
+                    <?php echo $user['alias'] ?>
                     
                     </p>
                 </section>
@@ -63,7 +68,7 @@
                 }
 
                 /**
-                 * Etape 4: @todo Parcourir les messsages et remplir correctement le HTML avec les bonnes valeurs php
+                 * Etape 4: Parcourir les messsages et remplir correctement le HTML avec les bonnes valeurs php
                  */
                 while ($post = $lesInformations->fetch_assoc())
                 {
@@ -89,7 +94,68 @@
                         </footer>
                     </article>
                 <?php } ?>
+             <section>
+                <article>
+                <?php
+                /**
+                     * TRAITEMENT DU FORMULAIRE
+                     */
+                    // Etape 1 : vérifier si on est en train d'afficher ou de traiter le formulaire
+                    // si on recoit un champs email rempli il y a une chance que ce soit un traitement
+                    $enCoursDeTraitement = isset($_POST['id']);
+                    if ($enCoursDeTraitement)
+                    {
+                        // on ne fait ce qui suit que si un formulaire a été soumis.
+                        // Etape 2: récupérer ce qu'il y a dans le formulaire @todo: c'est là que votre travaille se situe
+                        // observez le résultat de cette ligne de débug (vous l'effacerez ensuite)
+                        echo "<pre>" . print_r($_POST, 1) . "</pre>";
+                        // et complétez le code ci dessous en remplaçant les ???
+                        $authorId = $_POST['id'];
+                        $postContent = $_POST['message'];
 
+
+                        //Etape 3 : Petite sécurité
+                        // pour éviter les injection sql : https://www.w3schools.com/sql/sql_injection.asp
+                        $authorId = intval($mysqli->real_escape_string($authorId));
+                        $postContent = $mysqli->real_escape_string($postContent);
+                        //Etape 4 : construction de la requete
+                        $lInstructionSql = "INSERT INTO posts "
+                                . "(id, user_id, content, created, parent_id) "
+                                . "VALUES (NULL, " 
+                                . $userId . ", "
+                                . "'" . $postContent . "', "
+                                . "NOW(), "
+                                . "NULL);"
+                                ;
+                        echo $lInstructionSql;
+                        // Etape 5 : execution
+                        $ok = $mysqli->query($lInstructionSql);
+                        if ( ! $ok)
+                        {
+                            echo "Impossible d'ajouter le message: " . $mysqli->error;
+                        } else
+                        {
+                            echo "Message posté en tant que :" . $user['alias'];
+                        }
+                    }
+                    ?>                     
+                    <form action="wall.php" method="post">
+                    <input type='hidden' name='id' value="<?php echo $userId ?>">
+                        <dl>
+                        <h3>
+                        <time datetime='2020-02-01 11:12:13' >31 février 2010 à 11h12</time>
+                        </h3>
+                    <address><?php
+                                        echo $user['alias'];
+                                    ?></address>
+                                    
+                            <dt><label for='message'>Message</label></dt>
+                            <dd><textarea name='message'></textarea></dd>
+                        </dl>
+                        <input type='submit'>
+                    </form>  
+                </article>     
+                </section>
             </main>
         </div>
     </body>
